@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RUMSO - Fit & Fun Challenge Day</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #4a3c85 0%, #6b5b95 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo {
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            padding: 5px;
+        }
+        
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        .site-title h1 {
+            font-size: 1.5em;
+            margin-bottom: 5px;
+        }
+        
+        .site-title p {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        
+        /* Navigation */
+        nav {
+            background: #3d3166;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            flex-wrap: wrap;
+        }
+        
+        nav li {
+            position: relative;
+        }
+        
+        nav a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 15px 20px;
+            transition: background 0.3s;
+        }
+        
+        nav a:hover {
+            background: #4a3c85;
+        }
+        
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, #4a3c85 0%, #6b5b95 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            margin: -20px -20px 40px -20px;
+        }
+        
+        .hero h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 1.2em;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* Section Styles */
+        .section {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        
+        .section.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .content-card {
+            background: white;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h2 {
+            color: #4a3c85;
+            margin-bottom: 20px;
+            font-size: 2em;
+            border-bottom: 3px solid #6b5b95;
+            padding-bottom: 10px;
+        }
+        
+        h3 {
+            color: #4a3c85;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        
+        h4 {
+            color: #6b5b95;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        /* Station Cards */
+        .station-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .station-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .station-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .station-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+        
+        .station-card h3 {
+            margin-top: 0;
+        }
+        
+        /* Schedule Table */
+        .schedule-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .schedule-table th,
+        .schedule-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .schedule-table th {
+            background: #4a3c85;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .schedule-table tr:hover {
+            background: #f5f5f5;
+        }
+        
+        /* Budget Table */
+        .budget-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+        }
+        
+        .budget-table th,
+        .budget-table td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        
+        .budget-table th {
+            background: #4a3c85;
+            color: white;
+        }
+        
+        .budget-table .total-row {
+            background: #6b5b95;
+            color: white;
+            font-weight: bold;
+        }
+        
+        /* Info Boxes */
+        .info-box {
+            background: #f0f0f0;
+            padding: 20px;
+            border-left: 4px solid #4a3c85;
+            margin: 20px 0;
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, #4a3c85 0%, #6b5b95 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        /* Forms */
+        .form-section {
+            background: #f9f9f9;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #4a3c85;
+        }
+        
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="tel"],
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        /* Team Grid */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .team-member {
+            text-align: center;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .team-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4a3c85 0%, #6b5b95 100%);
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3em;
+            overflow: hidden;
+        }
+        
+        .team-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* Map Section */
+        .map-container {
+            background: #f0f0f0;
+            padding: 40px;
+            border-radius: 10px;
+            margin: 30px 0;
+            text-align: center;
+        }
+        
+        .map-diagram {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-family: monospace;
+            text-align: left;
+            overflow-x: auto;
+        }
+        
+        /* Footer */
+        footer {
+            background: #2d2349;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 60px;
+        }
+        
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #4a3c85;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+            margin: 10px 5px;
+        }
+        
+        .btn:hover {
+            background: #6b5b95;
+        }
+        
+        .btn-secondary {
+            background: #28a745;
+        }
+        
+        .btn-secondary:hover {
+            background: #20c997;
+        }
+        
+        /* Lists */
+        ul.styled-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        ul.styled-list li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+        
+        ul.styled-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #4a3c85;
+            font-weight: bold;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                flex-direction: column;
+            }
+            
+            .hero h2 {
+                font-size: 1.8em;
+            }
+            
+            .station-grid,
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Print Styles */
+        @media print {
+            nav, .btn {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo-section">
+                <div class="logo">
+                    <img src="https://i.ibb.co/1G6LvmbR/1758130424-0817308.jpg" alt="RUMSO Logo">
+                </div>
+                <div class="site-title">
+                    <h1>RUMSO</h1>
+                    <p>Rockford University Men's Soccer Organization</p>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <nav>
+        <ul>
+            <li><a href="#" onclick="showSection('home')">Home</a></li>
+            <li><a href="#" onclick="showSection('about')">About Us</a></li>
+            <li><a href="#" onclick="showSection('event-info')">Event Info</a></li>
+            <li><a href="#" onclick="showSection('stations')">Stations</a></li>
+            <li><a href="#" onclick="showSection('schedule')">Schedule</a></li>
+            <li><a href="#" onclick="showSection('register')">Register</a></li>
+            <li><a href="#" onclick="showSection('volunteers')">Volunteers</a></li>
+            <li><a href="#" onclick="showSection('resources')">Resources</a></li>
+        </ul>
+    </nav>
+    
+    <main>
+        <!-- HOME SECTION -->
+        <section id="home" class="section active">
+            <div class="hero">
+                <h2>Fit & Fun Challenge Day</h2>
+                <p>Join us for an incredible day of fitness, teamwork, and fun! November 4, 2024</p>
+                <div style="margin-top: 30px;">
+                    <a href="#" onclick="showSection('register')" class="btn">Register Now</a>
+                    <a href="#" onclick="showSection('event-info')" class="btn btn-secondary">Learn More</a>
+                </div>
+            </div>
+            
+            <div class="container">
+                <div class="content-card">
+                    <h2>Welcome to RUMSO's Fit & Fun Challenge Day!</h2>
+                    <p style="font-size: 1.1em; margin-bottom: 20px;">
+                        We're excited to invite you to an extraordinary community event that celebrates physical fitness, teamwork, and the joy of movement!
+                    </p>
+                    
+                    <div style="text-align: center; margin: 30px 0;">
+                        <img src="https://i.ibb.co/mVySqqPD/IMG-2919-Original.jpg" alt="RUMSO Fit & Fun Challenge Day Event" style="max-width: 100%; height: auto; border-radius: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.15);">
+                    </div>
+                    
+                    <h3>Our Mission</h3>
+                    <p>
+                        RUMSO is dedicated to promoting physical fitness, teamwork, and community engagement through the power of sports. We believe that staying active should be fun, accessible, and inspire people of all ages to live healthier lives. Through our Fit & Fun Challenge Day, we aim to create an inclusive environment where participants discover the joy of movement, build lasting friendships, and develop skills that extend far beyond the playing field.
+                    </p>
+                </div>
+                
+                <div class="highlight-box">
+                    <h3 style="color: white; margin-top: 0;">Event Highlights</h3>
+                    <ul class="styled-list" style="color: white;">
+                        <li>5 Exciting Challenge Stations</li>
+                        <li>Professional Volunteers & Coaching</li>
+                        <li>Certificates & Recognition for All Participants</li>
+                        <li>Free Water & Healthy Snacks</li>
+                        <li>Fun, Safe, and Inclusive Environment</li>
+                        <li>Perfect for All Skill Levels</li>
+                    </ul>
+                </div>
+                
+                <div class="content-card">
+                    <h3>Three Pillars of Our Event</h3>
+                    
+                    <h4>🏃 FITNESS</h4>
+                    <p>We promote physical activity and healthy habits through engaging challenges that get everyone moving. Our stations showcase different aspects of fitness - from cardiovascular endurance to strength to agility.</p>
+                    
+                    <h4>🤝 TEAMWORK</h4>
+                    <p>Success isn't measured individually - it's about how groups work together. Every station emphasizes cooperation, communication, and supporting one another to achieve common goals.</p>
+                    
+                    <h4>🎉 FUN</h4>
+                    <p>Physical activity should bring joy! We've created an environment where friendly competition, encouragement, and celebration make fitness something to look forward to.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- ABOUT SECTION -->
+        <section id="about" class="section">
+            <div class="container">
+                <div class="content-card">
+                    <h2>Meet Our Team</h2>
+                    <p style="font-size: 1.1em; margin-bottom: 30px;">
+                        Our dedicated RUMSO team is committed to making this event a success!
+                    </p>
+                    
+                    <div class="team-grid">
+                        <div class="team-member">
+                            <div class="team-photo">
+                                <img src="https://i.ibb.co/N2VzfRLd/Wadhwa-1.webp" alt="Kavi Wadhwa">
+                            </div>
+                            <h3>Kavi Wadhwa</h3>
+                            <p><strong>Event Coordinator & Station Leader</strong></p>
+                            <p><strong>Junior | Kinesiology Major</strong></p>
+                        </div>
+                        
+                        <div class="team-member">
+                            <div class="team-photo">
+                                <img src="https://i.ibb.co/fzTgCvcw/Moussata-3.webp" alt="Chardel Moussata">
+                            </div>
+                            <h3>Chardel Moussata</h3>
+                            <p><strong>Safety Coordinator & Volunteer Manager</strong></p>
+                            <p><strong>Senior | Sports Management Major</strong></p>
+                        </div>
+                        
+                        <div class="team-member">
+                            <div class="team-photo">
+                                <img src="https://i.ibb.co/0Vm0ybnd/IMG-0458.jpg" alt="Miguel Patino">
+                            </div>
+                            <h3>Miguel Patino</h3>
+                            <p><strong>Logistics Coordinator & Station Leader</strong></p>
+                            <p><strong>Junior | Kinesiology Major</strong></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- EVENT INFO SECTION -->
+        <section id="event-info" class="section">
+            <div class="container">
+                <div class="content-card">
+                    <h2>Event Information</h2>
+                    
+                    <div class="info-box">
+                        <h3 style="margin-top: 0;">📅 Date & Time</h3>
+                        <p><strong>Date:</strong> Monday, November 4, 2024</p>
+                        <p><strong>Time:</strong> 12:30 PM - 3:00 PM</p>
+                        <p><strong>Registration:</strong> Opens at 12:00 PM</p>
+                    </div>
+                    
+                    <div class="info-box">
+                        <h3 style="margin-top: 0;">📍 Location</h3>
+                        <p><strong>Spectrum Progressive School of Rockford</strong></p>
+                        <p>4848 Turner Street</p>
+                        <p>Rockford, IL 61107</p>
+                        <p><strong>Parking:</strong> Available on-site</p>
+                        <p><strong>Venue:</strong> Indoor/outdoor facilities</p>
+                    </div>
+                    
+                    <div class="map-container">
+                        <h3>How to Find Us</h3>
+                        <p><strong>Directions:</strong></p>
+                        <ul style="text-align: left; max-width: 600px; margin: 20px auto;">
+                            <li>Located on Turner Street in Rockford</li>
+                            <li>Easily accessible from major routes</li>
+                            <li>On-site parking available</li>
+                        </ul>
+                        <p style="margin-top: 20px; padding: 20px; background: white; border-radius: 10px;">
+                            [Embed Google Map here when creating on Google Sites]<br>
+                            <a href="https://www.google.com/maps/place/4848+Turner+St,+Rockford,+IL+61107" target="_blank" class="btn">Open in Google Maps</a>
+                        </p>
+                    </div>
+                    
+                    <div class="info-box">
+                        <h3 style="margin-top: 0;">📞 Contact Information</h3>
+                        <p><strong>Email:</strong> rumso@rockford.edu</p>
+                        <p><strong>Phone:</strong> (815) 226-4000</p>
+                        <p><strong>Social Media:</strong> @RUMSOSoccer</p>
+                        <p><strong>Emergency Contact:</strong> Campus Security (815) 226-4000</p>
+                    </div>
+                </div>
+                
+                <div class="content-card">
+                    <h2>Event Theme: Fitness • Teamwork • Fun</h2>
+                    
+                    <h3>Program Goals</h3>
+                    <ul class="styled-list">
+                        <li>Promote physical activity and healthy habits</li>
+                        <li>Build teamwork and communication skills</li>
+                        <li>Provide a fun and engaging experience for all participants</li>
+                    </ul>
+                    
+                    <h3>What to Expect</h3>
+                    <p>
+                        Participants will rotate through 5 exciting challenge stations, each designed to test different skills while emphasizing teamwork and fun. Each station lasts approximately 5 minutes. The event begins with a group warm-up and concludes with a celebration ceremony where all participants receive recognition for their efforts.
+                    </p>
+                    
+                    <h3>Who Should Attend?</h3>
+                    <p>
+                        This event is perfect for anyone who wants to be active, try new challenges, and be part of a supportive community. All skill levels are welcome - our focus is on participation, effort, and having fun!
+                    </p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- STATIONS SECTION -->
+        <section id="stations" class="section">
+            <div class="container">
+                <div class="content-card">
+                    <h2>Challenge Stations</h2>
+                    <p style="font-size: 1.1em; margin-bottom: 30px;">
+                        Experience five exciting stations designed to challenge different skills while promoting teamwork and fun!
+                    </p>
+                    
+                    <div class="map-container">
+                        <h3>Station Rotation Map</h3>
+                        <p>Follow the flow from Sign-In through all five challenge stations!</p>
+                        <div style="background: #8bc34a; padding: 30px; border-radius: 10px; margin: 20px 0; position: relative;">
+                            <div style="background: white; padding: 20px; border-radius: 10px;">
+                                <img src="https://i.ibb.co/XfxXWkKM/stations-1.png" alt="Fit & Fun Challenge Day Station Map" style="max-width: 100%; height: auto; border-radius: 10px; display: block; margin: 0 auto;">
+                            </div>
+                            <p style="margin-top: 15px; text-align: center; color: #2d5016;"><em>Station rotation showing the clockwise flow: Sign-In → Relay Races → Floor is Lava → Soccer Shootout → Jump Rope Challenge</em></p>
+                        </div>
+                        <p><strong>Rotation Pattern:</strong> Teams rotate clockwise through stations, spending approximately 5 minutes at each challenge.</p>
+                    </div>
+                </div>
+                
+                <div class="station-grid">
+                    <div class="station-card">
+                        <div class="station-icon">🏃</div>
+                        <h3>Relay Races</h3>
+                        <p><strong>Speed, Coordination, Team Spirit!</strong></p>
+                        <div style="background: #f0f0f0; padding: 15px; border-radius: 8px; margin: 15px 0;">
+                            <img src="https://i.ibb.co/35rK3S57/relayrace.jpg" alt="Relay Races" style="width: 100%; height: auto; border-radius: 8px;">
+                        </div>
+                        <p>Get ready to race! Teams compete in classic relay challenges that test speed and coordination. Pass the baton, cheer for your teammates, and feel the excitement!</p>
+                        <p><strong>Skills:</strong> Speed, coordination, teamwork</p>
+                        <p><strong>Duration:</strong> 5 minutes</p>
+                    </div>
+                    
+                    <div class="station-card">
+                        <div class="station-icon">🔥</div>
+                        <h3>Floor is Lava</h3>
+                        <p><strong>Navigate, Don't Touch the Ground!</strong></p>
+                        <div style="background: #f0f0f0; padding: 15px; border-radius: 8px; margin: 15px 0;">
+                            <img src="https://i.ibb.co/cczxgccP/IMG-2895-Original.jpg" alt="Floor is Lava" style="width: 100%; height: auto; border-radius: 8px;">
+                        </div>
+                        <p>The floor is lava! Navigate through the course without touching the ground. Use platforms, balance, and strategy to make it across safely!</p>
+                        <p><strong>Skills:</strong> Balance, problem-solving, agility</p>
+                        <p><strong>Duration:</strong> 5 minutes</p>
+                    </div>
+                    
+                    <div class="station-card">
+                        <div class="station-icon">⚽</div>
+                        <h3>Soccer Shootout</h3>
+                        <p><strong>Aim High, Score Goals!</strong></p>
+                        <div style="background: #f0f0f0; padding: 15px; border-radius: 8px; margin: 15px 0;">
+                            <img src="https://i.ibb.co/L7wF0kV/penaltyshootout.jpg" alt="Soccer Shootout" style="width: 100%; height: auto; border-radius: 8px;">
+                        </div>
+                        <p>Channel your inner soccer star! Take your best shots at multiple goal targets and discover the thrill of accuracy. Every goal is a team celebration!</p>
+                        <p><strong>Skills:</strong> Accuracy, focus, sportsmanship</p>
+                        <p><strong>Duration:</strong> 5 minutes</p>
+                    </div>
+                    
+                    <div class="station-card">
+                        <div class="station-icon">🪢</div>
+                        <h3>Tug-of-War</h3>
+                        <p><strong>Pull Together, Win Together!</strong></p>
+                        <div style="background: #f0f0f0; padding: 15px; border-radius: 8px; margin: 15px 0;">
+                            <img src="https://i.ibb.co/Y4L6w131/IMG-2909-Original.jpg" alt="Tug-of-War" style="width: 100%; height: auto; border-radius: 8px;">
+                        </div>
+                        <p>Feel the power of teamwork! This classic challenge brings groups together in the ultimate test of strength and cooperation.</p>
+                        <p><strong>Skills:</strong> Strength, cooperation, unity</p>
+                        <p><strong>Duration:</strong> 5 minutes</p>
+                        <p style="color: #999; font-style: italic; font-size: 0.9em;">*Note: Tug-of-War may be featured as a special challenge depending on schedule</p>
+                    </div>
+                    
+                    <div class="station-card">
+                        <div class="station-icon">🦘</div>
+                        <h3>Jump Rope Challenge</h3>
+                        <p><strong>Jump, Count, Keep Moving!</strong></p>
+                        <div style="background: #f0f0f0; padding: 15px; border-radius: 8px; margin: 15px 0;">
+                            <img src="https://i.ibb.co/gbqpQjTm/jumprope-challenge.jpg" alt="Jump Rope Challenge" style="width: 100%; height: auto; border-radius: 8px;">
+                        </div>
+                        <p>Rediscover the joy of jumping rope! From individual challenges to group jump rope fun, test your endurance and rhythm!</p>
+                        <p><strong>Skills:</strong> Endurance, rhythm, self-motivation</p>
+                        <p><strong>Duration:</strong> 5 minutes</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- SCHEDULE SECTION -->
+        <section id="schedule" class="section">
+            <div class="container">
+                <div class="content-card">
+                    <h2>Event Schedule</h2>
+                    
+                    <table class="schedule-table">
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>Activity</th>
+                                <th>Details</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>12:00 PM</td>
+                                <td>Volunteer Arrival</td>
+                                <td>Setup and station briefings</td>
+                            </tr>
+                            <tr>
+                                <td>12:30 PM</td>
+                                <td>Registration Opens</td>
+                                <td>Check-in for participants</td>
+                            </tr>
+                            <tr>
+                                <td>12:45 PM</td>
+                                <td>Opening Ceremony</td>
+                                <td>Welcome, warm-up, team assignments</td>
+                            </tr>
+                            <tr>
+                                <td>1:00 PM</td>
+                                <td>Station Rotations Begin</td>
+                                <td>Groups rotate through challenge stations</td>
+                            </tr>
+                            <tr>
+                                <td>2:15 PM</td>
+                                <td>Final Station</td>
+                                <td>Last rotation and challenges</td>
+                            </tr>
+                            <tr>
+                                <td>2:30 PM</td>
+                                <td>Closing Ceremony</td>
+                                <td>Cool-down, recognition, awards</td>
+                            </tr>
+                            <tr>
+                                <td>3:00 PM</td>
+                                <td>Event Concludes</td>
+                                <td>Thank you and dismissal</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+        
+        <!-- REGISTER SECTION -->
+        <section id="register" class="section">
+            <div class="container">
+                <div class="content-card">
+                    <h2>Register for the Event</h2>
+                    <p style="font-size: 1.1em; margin-bottom: 20px;">
+                        Join us for an incredible day of fitness, teamwork, and fun! Registration is FREE!
+                    </p>
+                    
+                    <div class="highlight-box">
+                        <h3 style="color: white; margin-top: 0;">Registration Details</h3>
+                        <ul class="styled-list" style="color: white;">
+                            <li><strong>Cost:</strong> FREE - No registration fee!</li>
+                            <li><strong>Event Date:</strong> November 4, 2024</li>
+                            <li><strong>What's Included:</strong> All activities, water, snacks, and participation certificate</li>
+                            <li><strong>Age Requirement:</strong> All ages welcome (minors need parent/guardian signature)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3>Participant Registration Form</h3>
+                        <p><em>Please complete all required fields</em></p>
+                        
+                        <div class="form-group">
+                            <label>Participant Name *</label>
+                            <input type="text" required>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                            <div class="form-group">
+                                <label>Age *</label>
+                                <input type="text" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Date of Birth *</label>
+                                <input type="text" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Email *</label>
+                            <input type="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Phone *</label>
+                            <input type="tel" required>
+                        </div>
+                        
+                        <h4>Emergency Contact</h4>
+                        <div class="form-group">
+                            <label>Emergency Contact Name *</label>
+                            <input type="text" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Emergency Contact Phone *</label>
+                            <input type="tel" required>
+                        </div>
+                        
+                        <h4>Health Information</h4>
+                        <div class="form-group">
+                            <label>Medical Conditions (if any)</label>
+                            <textarea rows="2"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Allergies (if any)</label>
+                            <input type="text">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Physical Limitations or Accommodations Needed</label>
+                            <textarea rows="2"></textarea>
+                        </div>
+                        
+                        <h4>Permission & Waiver</h4>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="liability">
+                            <label for="liability">I understand and accept the risks associated with physical activities *</label>
+                        </div>
+                        
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="medical">
+                            <label for="medical">I authorize emergency medical treatment if needed *</label>
+                        </div>
+                        
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="photo">
+                            <label for="photo">I give permission for photos/videos to be used for promotional purposes</label>
+                        </div>
+                        
+                        <button class="btn" style="margin-top: 20px; cursor: pointer;">Submit Registration</button>
+                    </div>
+                    
+                    <div class="info-box" style="margin-top: 30px;">
+                        <h3 style="margin-top: 0;">📄 Download Forms</h3>
+                        <p>Prefer to fill out forms manually? Download our PDF registration form:</p>
+                        <a href="#" class="btn">Download Registration Form (PDF)</a>
+                        <p style="margin-top: 15px;"><strong>Submit completed forms to:</strong> rumso@rockford.edu</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- VOLUNTEERS SECTION -->
+        <section id="volunteers" class="section">
+            <div class="container">
+                <div class="content-card">
+                    <h2>Volunteer Information</h2>
+                    <p style="font-size: 1.1em; margin-bottom: 20px;">
+                        Help us make Fit & Fun Challenge Day a success on November 4, 2024! We need enthusiastic volunteers to support our stations and participants.
+                    </p>
+                    
+                    <div class="highlight-box">
+                        <h3 style="color: white; margin-top: 0;">Volunteer Benefits</h3>
+                        <ul class="styled-list" style="color: white;">
+                            <li>Certificate of volunteer service</li>
+                            <li>RUMSO volunteer t-shirt</li>
+                            <li>Community service hours documentation</li>
+                            <li>Free refreshments and snacks</li>
+                            <li>Invitation to volunteer appreciation celebration</li>
+                            <li>Make a difference in your community!</li>
+                        </ul>
+                    </div>
+                    
+                    <h3>Volunteer Positions Available</h3>
+                    
+                    <h4>Station Volunteers (2-3 per station)</h4>
+                    <ul>
+                        <li><strong>Relay Race Station:</strong> Starter, Timer/Recorder</li>
+                        <li><strong>Floor is Lava Station:</strong> Safety Monitor, Timer, Encourager</li>
+                        <li><strong>Soccer Shootout Station:</strong> Ball Retrieval, Score Keeper</li>
+                        <li><strong>Tug-of-War Station:</strong> Referee, Safety Monitor</li>
+                        <li><strong>Jump Rope Station:</strong> Counter, Motivator</li>
+                    </ul>
+                    
+                    <h4>Support Positions</h4>
+                    <ul>
+                        <li>Registration & Check-in Staff</li>
+                        <li>Setup & Breakdown Crew</li>
+                        <li>Floating Assistants</li>
+                        <li>Photography/Documentation</li>
+                    </ul>
+                    
+                    <h3>Volunteer Schedule</h3>
+                    <table class="schedule-table">
+                        <tr>
+                            <th>Time</th>
+                            <th>Activity</th>
+                        </tr>
+                        <tr>
+                            <td>12:00 PM</td>
+                            <td>Volunteer check-in and orientation</td>
+                        </tr>
+                        <tr>
+                            <td>12:30 PM - 3:00 PM</td>
+                            <td>Event activities and support</td>
+                        </tr>
+                        <tr>
+                            <td>3:00 PM - 3:30 PM</td>
+                            <td>Breakdown and cleanup</td>
+                        </tr>
+                    </table>
+                    
+                    <h3>What to Bring</h3>
+                    <ul class="styled-list">
+                        <li>Water bottle (refills available)</li>
+                        <li>Comfortable athletic clothing</li>
+                        <li>Closed-toe athletic shoes</li>
+                        <li>Sunscreen and hat</li>
+                        <li>Positive attitude and energy!</li>
+                    </ul>
+                    
+                    <h3>Featured Volunteers</h3>
+                    <p style="margin-bottom: 20px;">We're proud to have these special volunteers from the Rockford University Soccer community supporting our event!</p>
+                    
+                    <div class="team-grid">
+                        <div class="team-member">
+                            <div class="team-photo">
+                                <img src="https://i.ibb.co/Dfwq2KVL/Muganwa-3.webp" alt="Sean Muganwa">
+                            </div>
+                            <h3>Sean Muganwa</h3>
+                            <p><strong>RU Men's Soccer Player</strong></p>
+                            <p>Sean brings his soccer expertise and passion for the game to help inspire and guide participants through our challenge stations!</p>
+                        </div>
+                        
+                        <div class="team-member">
+                            <div class="team-photo">
+                                <img src="https://i.ibb.co/84dhq5Ks/Martindale-1.webp" alt="Jackson Martindale">
+                            </div>
+                            <h3>Jackson Martindale</h3>
+                            <p><strong>RU Men's Soccer Player</strong></p>
+                            <p>Jackson will be supporting participants and demonstrating proper techniques to ensure everyone has a great experience at our stations!</p>
+                        </div>
+                        
+                        <div class="team-member">
+                            <div class="team-photo">
+                                <img src="https://i.ibb.co/23w5DTdk/Higgins.jpg" alt="Ethan Higgins">
+                            </div>
+                            <h3>Ethan Higgins</h3>
+                            <p><strong>RU Men's Soccer Coach</strong></p>
+                            <p>Coach Higgins brings leadership and coaching expertise to guide our volunteers and ensure a safe, fun event for all participants!</p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-box" style="margin-top: 30px;">
+                        <h3 style="margin-top: 0;">📋 Volunteer Registration</h3>
+                        <p><strong>To volunteer, please email:</strong> rumso@rockford.edu</p>
+                        <p>Include your name, phone, email, and preferred station/position</p>
+                        <a href="#" class="btn">Download Volunteer Packet (PDF)</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- RESOURCES SECTION -->
+        <section id="resources" class="section">
+            <div class="container">
+                <div class="content-card">
+                    <h2>Event Planning Resources</h2>
+                    <p>Complete planning materials for the Fit & Fun Challenge Day</p>
+                </div>
+                
+                <div class="content-card">
+                    <h3>Equipment Inventory</h3>
+                    <p>Complete list of equipment needed for all stations:</p>
+                    
+                    <h4>Relay Race Station</h4>
+                    <ul>
+                        <li>Start/finish line markers (10 cones)</li>
+                        <li>Relay batons (5)</li>
+                        <li>Stopwatch/timing device (2)</li>
+                        <li>Score recording sheets</li>
+                    </ul>
+                    
+                    <h4>Floor is Lava Station</h4>
+                    <ul>
+                        <li>Platform mats or stepping stones (10-15)</li>
+                        <li>Balance beams or planks (3-4)</li>
+                        <li>Safety cones for boundaries (8)</li>
+                        <li>Floor markers for "lava" zones</li>
+                        <li>Foam blocks or platforms (6-8)</li>
+                        <li>Safety mats (4)</li>
+                    </ul>
+                    
+                    <h4>Soccer Shootout Station</h4>
+                    <ul>
+                        <li>Portable soccer goals (3)</li>
+                        <li>Soccer balls (8)</li>
+                        <li>Shooting markers (6 cones)</li>
+                        <li>Ball pump and repair kit</li>
+                    </ul>
+                    
+                    <h4>Tug-of-War Station</h4>
+                    <ul>
+                        <li>Heavy-duty rope (50-foot)</li>
+                        <li>Center marker ribbon</li>
+                        <li>Boundary markers (4 cones)</li>
+                        <li>Safety cones (8)</li>
+                    </ul>
+                    
+                    <h4>Jump Rope Station</h4>
+                    <ul>
+                        <li>Individual jump ropes (20)</li>
+                        <li>Long group jump ropes (3)</li>
+                        <li>Counting clipboards</li>
+                        <li>Boundary markers</li>
+                    </ul>
+                    
+                    <h4>General Equipment</h4>
+                    <ul>
+                        <li>Registration tables and chairs</li>
+                        <li>First aid kit</li>
+                        <li>Water coolers and cups</li>
+                        <li>Pop-up tent</li>
+                        <li>Sound system and microphone</li>
+                        <li>Signage and banners</li>
+                    </ul>
+                </div>
+                
+                <div class="content-card">
+                    <h3>Event Budget</h3>
+                    
+                    <table class="budget-table">
+                        <thead>
+                            <tr>
+                                <th colspan="2">REVENUE</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Registration Fees (FREE Event)</td>
+                                <td>$0.00</td>
+                            </tr>
+                            <tr>
+                                <td>Sponsorships</td>
+                                <td>$50.00</td>
+                            </tr>
+                            <tr>
+                                <td>University Funding</td>
+                                <td>$0.00</td>
+                            </tr>
+                            <tr class="total-row">
+                                <td>TOTAL REVENUE</td>
+                                <td>$50.00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <table class="budget-table" style="margin-top: 20px;">
+                        <thead>
+                            <tr>
+                                <th colspan="2">EXPENSES</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Equipment (All Borrowed/Provided)</strong></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Soccer equipment</td>
+                                <td>$0.00</td>
+                            </tr>
+                            <tr>
+                                <td>Jump ropes</td>
+                                <td>$0.00</td>
+                            </tr>
+                            <tr>
+                                <td>Floor is Lava materials</td>
+                                <td>$0.00</td>
+                            </tr>
+                            <tr>
+                                <td>Tug-of-war rope</td>
+                                <td>$0.00</td>
+                            </tr>
+                            <tr>
+                                <td>Relay race equipment</td>
+                                <td>$0.00</td>
+                            </tr>
+                            <tr>
+                                <td>Safety/first aid supplies</td>
+                                <td>$0.00</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Event Materials (Donated/Provided)</strong></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Certificates and ribbons</td>
+                                <td>$0.00</td>
+                            </tr>
+                            <tr>
+                                <td>Registration materials</td>
+                                <td>$0.00</td>
+                            </tr>
+                            <tr>
+                                <td>Signage and banners</td>
+                                <td>$0.00</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Hospitality</strong></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Water and beverages</td>
+                                <td>$0.00</td>
+                            </tr>
+                            <tr>
+                                <td>Healthy snacks</td>
+                                <td>$50.00</td>
+                            </tr>
+                            <tr class="total-row">
+                                <td>TOTAL EXPENSES</td>
+                                <td>$50.00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <p style="margin-top: 20px;"><strong>Note:</strong> Most materials and equipment were borrowed, donated, or provided by Rockford University and community partners, keeping costs minimal and the event accessible to all participants.</p>
+                </div>
+                
+                <div class="content-card">
+                    <h3>Field Map & Station Layout</h3>
+                    <div class="map-diagram">
+<strong>SPECTRUM PROGRESSIVE SCHOOL LAYOUT</strong>
+
+Facility Area:
+
+🏁 STATION 1: RELAY RACES
+   Sprint lanes and transition zones
+
+🔥 STATION 2: FLOOR IS LAVA
+   Platform navigation course
+
+           CENTRAL GATHERING AREA
+         (Warm-up/Cool-down space)
+              📋 Registration
+              🏥 First Aid
+
+⚽ STATION 3: SOCCER SHOOTOUT
+   Multiple goal targets
+
+🪢 STATION 4: TUG-OF-WAR
+   Open area for competition
+
+🦘 STATION 5: JUMP ROPE
+   Individual & group zones
+
+Support Areas:
+💧 Water stations at each station
+🚻 Restrooms - Available on-site
+                    </div>
+                    
+                    <p><strong>Station Spacing:</strong> Minimum 20 feet between stations</p>
+                    <p><strong>Rotation Pattern:</strong> Clockwise movement, 5 minutes per station</p>
+                </div>
+                
+                <div class="content-card">
+                    <h3>Download Resources</h3>
+                    <p>Access all planning documents and forms:</p>
+                    <a href="#" class="btn">Download Complete Event Plan (PDF)</a>
+                    <a href="#" class="btn">Download Volunteer Packet (PDF)</a>
+                    <a href="#" class="btn">Download Registration Form (PDF)</a>
+                    <a href="#" class="btn">Download Station Plans (PDF)</a>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <h3>RUMSO - Rockford University Men's Soccer Organization</h3>
+            <p>Spectrum Progressive School of Rockford</p>
+            <p>4848 Turner Street, Rockford, IL 61107</p>
+            <p>Email: rumso@rockford.edu | Phone: (815) 226-4000</p>
+            <p style="margin-top: 20px;">Follow us: @RUMSOSoccer</p>
+            <p style="margin-top: 20px; opacity: 0.8;">© 2024 RUMSO. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <script>
+        function showSection(sectionId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show selected section
+            const selectedSection = document.getElementById(sectionId);
+            if (selectedSection) {
+                selectedSection.classList.add('active');
+            }
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+        
+        // Show home section by default
+        document.addEventListener('DOMContentLoaded', function() {
+            showSection('home');
+        });
+    </script>
+</body>
+</html>
